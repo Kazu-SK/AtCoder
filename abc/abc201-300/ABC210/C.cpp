@@ -13,6 +13,7 @@ using LL = long long;
 int main()
 {
     int N = 0, K = 0;
+    map<int, int> Map;
 
 
     cin >> N >> K;
@@ -24,25 +25,31 @@ int main()
         cin >> C[i];
     }
 
-    set<int> S;
-    int ans = 0;
 
-    for (int n = 0; n < N; n++) {
+    for (int i = 0; i < K; i++) {
+        Map[C[i]]++;
+    }
 
-        if (n + K - 1 < N) {
+    int ans = Map.size();
 
-            for (int c = n; c < n + K; c++) {
-                S.insert(C[c]);
-            }
+    //cout << "Map.size() = " << Map.size() << endl;
+    //cout << "ans = " << ans << endl;
 
-            int S_size = S.size();
+    for (int i = K; i < N; i++) {
 
-            ans = max(ans, S_size);
+        Map[C[i - K]]--;
+        Map[C[i]]++;
 
-            S.clear();
-        }
-        else
-            break;
+        if (Map[C[i - K]] == 0)
+            Map.erase(C[i - K]);
+
+        //cout << "Map.size() = " << Map.size() << endl;
+
+        int kind_size = Map.size();
+
+        ans = max(ans, kind_size);
+
+        //cout << "ans = " << ans << endl;
     }
 
     cout << ans << endl;
