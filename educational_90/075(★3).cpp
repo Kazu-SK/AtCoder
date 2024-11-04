@@ -34,6 +34,7 @@ int main()
 	vector<LL> prime_num;
 	map<int,vector<LL>> fase;
 
+
 	cin >> N;
 
 	fase[0].push_back(N);
