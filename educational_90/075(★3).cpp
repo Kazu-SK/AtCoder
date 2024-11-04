@@ -30,11 +30,11 @@ vector<LL> PrimeFactorization(LL N) {
 
 int main()
 {
-    LL N = 0;
-    vector<LL> prime_num;
-    map<int,vector<LL>> fase;
+	LL N = 0;
+	vector<LL> prime_num;
+	map<int,vector<LL>> fase;
 
-    cin >> N;
+	cin >> N;
 
 	fase[0].push_back(N);
 
@@ -72,6 +72,6 @@ int main()
 
 	cout << ans << endl;
 
-    return 0;
+	return 0;
 }
 
