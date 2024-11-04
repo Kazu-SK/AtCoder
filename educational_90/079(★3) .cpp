@@ -12,16 +12,16 @@ using LL = long long;
 
 int main()
 {
-    int H = 0, W = 0;
+	int H = 0, W = 0;
 
 
-    cin >> H >> W;
+	cin >> H >> W;
 
 
-    vector<vector<int>> A(H, vector<int>(W));
-    vector<vector<int>> B(H, vector<int>(W));
+	vector<vector<int>> A(H, vector<int>(W));
+	vector<vector<int>> B(H, vector<int>(W));
 
-    int range[4][2] = {{0,0},{0,1},{1,1},{1,0}};
+	int range[4][2] = {{0,0},{0,1},{1,1},{1,0}};
 
 
 	for (int h = 0; h < H; h++) {
@@ -34,7 +34,7 @@ int main()
 			cin >> B[h][w];
 	}
 
-    LL ans = 0;
+	LL ans = 0;
 
 	for (int h = 0; h < H - 1; h++) {
 		for (int w = 0; w < W - 1; w++) {
@@ -54,7 +54,7 @@ int main()
 		}
 	}
 
-    bool judge = true;
+	bool judge = true;
 
 	for (int h = 0; h < H; h++) {
 		for (int w = 0; w < W; w++){
