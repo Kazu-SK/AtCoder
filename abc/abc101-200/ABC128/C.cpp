@@ -21,6 +21,7 @@ int main()
     vector<int> k(M);
     vector<vector<int>> s(M);
     vector<int> p(M);
+    vector<int> k_s_num(M);
 
 
     for (int i = 0; i < M; i++) {
@@ -30,10 +31,9 @@ int main()
             int s_num = 0;
             cin >> s_num;
             s_num--;
-            s[i].push_back(s_num);
-        }
 
-        sort(s[i].begin(), s[i].end());
+            k_s_num[i] += (1 << s_num);
+        }
     }
 
     for (int i = 0; i < M; i++)
@@ -44,29 +44,23 @@ int main()
 	for (int num = 0; num < (1 << N) ; num++) {
 
         int light_on = 0;
-	    
+
         for (int i = 0; i < M; i++) {
 
-            int s_on = 0;
-            int si_itr = 0;
+            int s_on = num & k_s_num[i];
+            int s_on_num = 0;
 
-			for (int bit = 0; bit < N ; bit++) {
-				if ((num & (1 << bit)) && (bit == s[i][si_itr])) {
-                    s_on++;
-					si_itr++;
-
-                    if (si_itr == s[i].size())
-                        break;
-				}
-			}
+            for (int bit = 0; bit < N; bit++) {
+                if (s_on & (1 << bit))
+                    s_on_num++;
+            }
             
-            if (p[i] == s_on % 2) {
+            if (p[i] == s_on_num % 2) {
                 light_on++;
             }
         }
 
         if (light_on == M) {
-            cout << num << endl;
             ans++;
         }
 	}
