@@ -1,7 +1,6 @@
 ﻿#include <iostream>
 #include <vector>
 
-
 using namespace std;
 
 int main()
@@ -11,32 +10,42 @@ int main()
 
     cin >> N;
 
-    vector<int> A(N + 1, 0);
-    vector<int> B(N + 1, 0);
-    vector<long long> dp(N + 1, 100000000);
+
+    int offset = 1;
+    vector<int> A(N + offset, 0);
+    vector<int> B(N + offset, 0);
+    vector<int> DP(N + offset, 0);
 
 
-    for (int A_i = 2; A_i <= N; A_i++)
-        cin >> A[A_i];
+    for (int i = 2; i <= N; i++)
+        cin >> A[i];
 
-    for (int B_i = 3; B_i <= N; B_i++)
-        cin >> B[B_i];
+    for (int i = 3; i <= N; i++)
+        cin >> B[i];
 
 
-    dp[1] = 0;
+    int A_root = 0;
+    int B_root = 0;
+    const int B_root_start = 3;
 
-    for (int room = 1; room <= N - 1; room++) {
+    for (int i = 1; i <= N; i++) {
 
-        if (room == N - 1)
-            dp[room + 1] = min(dp[room + 1], dp[room] + A[room + 1]);
-        else {
-            dp[room + 2] = min(dp[room + 2], dp[room] + B[room + 2]);
-            dp[room + 1] = min(dp[room + 1], dp[room] + A[room + 1]);
+        A_root = DP[i - 1] + A[i];
+
+        if (i >= B_root_start) {
+            B_root = DP[i - 2] + B[i];
+
+            if (A_root < B_root)
+                DP[i] = A_root;
+            else
+                DP[i] = B_root;
         }
-
+        else {
+            DP[i] = A_root;
+        }
     }
 
-    cout << dp[N] << endl;
+    cout << DP[N] << endl;
 
     return 0;
 }
