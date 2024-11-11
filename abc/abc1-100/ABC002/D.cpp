@@ -30,9 +30,7 @@ int main()
 		Map[y[i]].push_back(x[i]);
 	}
 
-
 	for (int people = 0; people < (1 << N); people++) {
-
 
 		for (int bit = 0; bit < N; bit++) {
 			if (people & (1 << bit)) {
@@ -65,7 +63,6 @@ int main()
 		}
 
 		select_people.clear();
-
 	}
 
 	cout << ans << endl;
