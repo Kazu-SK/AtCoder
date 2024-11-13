@@ -28,13 +28,15 @@ int main()
 
 	for (int num = 0; num < (1 << R); num++) {
 
+		auto a2 = a;
+
 		LL senbei_count = 0;
 		const int FRONT = 1;
 
 		for (int bit = 0; bit < R; bit++) {
 			if (num & (1 << bit)) {
 				for (int c = 0; c < C; c++) {
-					a[bit][c] = 1 - a[bit][c];
+					a2[bit][c] = 1 - a2[bit][c];
 				}
 			}
 		}
@@ -44,18 +46,13 @@ int main()
 			LL front_count = 0;
 
 			for (int r = 0; r < R; r++) {
-				if (a[r][c] == FRONT) {
+				if (a2[r][c] == FRONT) {
 					front_count++;
 				}
 			}
 
-			//cout << "front_count = " << front_count << endl;
-
 			senbei_count += max(front_count, R - front_count);
 		}
-
-		//cout << "num = " << num << endl;
-		//cout << "senbei_count = " << senbei_count << endl;
 
 		ans = max(ans, senbei_count);
 	}
