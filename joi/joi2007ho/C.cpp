@@ -1,5 +1,4 @@
-﻿
-#include <iostream>
+﻿#include <iostream>
 #include <vector>
 #include <algorithm>
 #include <queue>
@@ -18,7 +17,6 @@ int main()
 	cin >> N;
 
 	vector<pair<int, int>> p(N);
-	map<pair<int, int>,bool> Map;
 
 	for (int i = 0; i < N; i++) {
 		int x = 0;
@@ -28,11 +26,11 @@ int main()
 
 		p[i].first = x;
 		p[i].second = y;
-
-		Map[p[i]] = true;
 	}
 
 	LL ans = 0;
+
+	sort(p.begin(), p.end());
 
 	for (int i = 0; i < N; i++) {
 		for (int j = i + 1; j < N; j++) {
@@ -43,7 +41,7 @@ int main()
 			int diff_y = 0;
 			LL area;
 			pair<int, int> search_p[4];
-			
+
 			x[0] = p[i].first;
 			y[0] = p[i].second;
 
@@ -68,10 +66,16 @@ int main()
 			search_p[3].first = x[0] - diff_y;
 			search_p[3].second = y[0] + diff_x;
 
-			if ((Map[search_p[0]] == true && Map[search_p[1]] == true) || (Map[search_p[2]] == true && Map[search_p[3]] == true)) {
+			bool judge[4] = { false };
 
+			for (int k = 0; k < 4; k++) {
+				if (binary_search(p.begin(), p.end(), search_p[k])) {
+					judge[k] = true;
+				}
+			}
+
+			if((judge[0] && judge[1]) || (judge[2] && judge[3])) {
 				area = (LL)diff_x * diff_x + (LL)diff_y * diff_y;
-
 				ans = max(ans, area);
 			}
 		}
@@ -81,5 +85,3 @@ int main()
 
 	return 0;
 }
-
-
