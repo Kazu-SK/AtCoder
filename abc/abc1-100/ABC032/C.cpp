@@ -26,7 +26,6 @@ int main()
 		return 0;
 	}
 
-
 	int right = 1;
 	long long multi = 1;
 	int ans_length = 0;
