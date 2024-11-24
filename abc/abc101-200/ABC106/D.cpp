@@ -1,5 +1,4 @@
-﻿
-#include <iostream>
+﻿#include <iostream>
 #include <vector>
 #include <algorithm>
 #include <queue>
@@ -12,40 +11,49 @@ using LL = long long;
 
 int main()
 {
-    int N = 0, M = 0, Q = 0;
+	int N = 0, M = 0, Q = 0;
 
 
-    cin >> N >> M >> Q;
+	cin >> N >> M >> Q;
 
-    vector<LL> L(M);
-    vector<LL> R(M);
-    vector<LL> p(Q);
-    vector<LL> q(Q);
-    vector<LL> train_info(N + 2, 0);
-    vector<LL> train_sum(N + 2, 0);
+	vector<LL> L(M);
+	vector<LL> R(M);
+	vector<LL> p(Q);
+	vector<LL> q(Q);
+	vector<LL> ans(Q, 0);
+	vector<vector<LL>> train_info(N + 2, vector<LL>(N + 2, 0));
+	vector<vector<LL>> train_sum(N + 2, vector<LL>(N + 2, 0));
 
-    for (int i = 0; i < M; i++) {
-        cin >> L[i] >> R[i];
+	for (int i = 0; i < M; i++) {
+		cin >> L[i] >> R[i];
 
-        train_info[L[i]] += 1;
-        train_info[R[i] + 1] -= 1;
-    }
+		train_info[L[i]][R[i]] += 1;
+	}
 
-    for (int i = 0; i < Q; i++) {
-        cin >> p[i] >> q[i];
-    }
+	for (int i = 0; i < Q; i++) {
+		cin >> p[i] >> q[i];
+	}
 
-    for (int i = 1; i <= N; i++) {
-        cout << train_info[i] << " ";
-    }
-    cout << endl;
+	for (int r = 1; r <= N; r++) {
+		for (int c = 1; c <= N; c++) {
+			train_sum[r][c] += train_sum[r][c - 1] + train_info[r][c];
+		}
+	}
 
-    for (int i = 1; i <= N; i++) {
-        train_sum[i] = train_info[i] + train_sum[i - 1];
-        cout << train_sum[i] << " ";
-    }
+	for (int c = 1; c <= N; c++) {
+		for (int r = 1; r <= N; r++) {
+			train_sum[r][c] += train_sum[r - 1][c];
+		}
+	}
 
+	for (int i = 0; i < Q; i++) {
+		ans[i] = train_sum[q[i]][q[i]] - train_sum[p[i] - 1][q[i]] - train_sum[q[i]][p[i] - 1] + train_sum[p[i] - 1][p[i] - 1];
+	}
 
-    return 0;
+	for (int i = 0; i < Q; i++) {
+		cout << ans[i] << endl;
+	}
+
+	return 0;
 }
 
