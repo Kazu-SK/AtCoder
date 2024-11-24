@@ -1,4 +1,11 @@
-﻿#include <iostream>
+﻿
+/*********
+p[i]からq[i]の区間に走る区間が完全に含まれる列車の本数
+p[i] <= LjとRj <= q[i]が両方成り立つような列車jの本数
+
+*********/
+
+#include <iostream>
 #include <vector>
 #include <algorithm>
 #include <queue>
@@ -16,27 +23,28 @@ int main()
 
 	cin >> N >> M >> Q;
 
-	vector<LL> L(M);
-	vector<LL> R(M);
+	vector<LL> L(M); //列車jのスタート地点
+	vector<LL> R(M); //列車jの終点
 	vector<LL> p(Q);
 	vector<LL> q(Q);
-	vector<LL> ans(Q);
-	vector<vector<LL>> train_info(N + 1, vector<LL>(N + 1, 0));
-	vector<vector<LL>> train_sum(N + 1, vector<LL>(N + 1, 0));
+	vector<LL> ans(Q, 0);
+	vector<vector<LL>> train_sum(N + 2, vector<LL>(N + 2, 0));
 
-	for (int i = 0; i < M; i++) {
-		cin >> L[i] >> R[i];
+	for (int j = 0; j < M; j++) {
+		cin >> L[j] >> R[j];
 
-		train_info[L[i]][R[i]] += 1;
+		//L[j]からR[j]まで走る電車を1加算する。
+		train_sum[L[j]][R[j]] += 1;
 	}
 
 	for (int i = 0; i < Q; i++) {
 		cin >> p[i] >> q[i];
 	}
 
+	//二次元累積和の算出
 	for (int r = 1; r <= N; r++) {
 		for (int c = 1; c <= N; c++) {
-			train_sum[r][c] += train_sum[r][c - 1] + train_info[r][c];
+			train_sum[r][c] += train_sum[r][c - 1];
 		}
 	}
 
