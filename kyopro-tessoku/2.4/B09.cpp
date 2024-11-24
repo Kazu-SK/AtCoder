@@ -1,56 +1,88 @@
 ﻿#include <iostream>
 #include <vector>
+#include <algorithm>
+#include <queue>
+#include <map>
+#include <math.h>
+#include <set>
 
 using namespace std;
+using LL = long long;
 
 int main()
 {
-
-    int N = 0;
-
-    cin >> N;
+	int N = 0;
 
 
-    vector<int> A(N, 0);
-    vector<int> B(N, 0);
-    vector<int> C(N, 0);
-    vector<int> D(N, 0);
+	cin >> N;
 
-    int c_range = 1500;
-    vector<vector<int>> masu(c_range + 2, vector<int>(c_range + 2, 0));
-    vector<vector<int>> r_sum(c_range + 2, vector<int>(c_range + 2, 0));
-    vector<vector<int>> all_sum(c_range + 2, vector<int>(c_range + 2, 0));
+	const int RANGE = 1500;
+	const int SUM_RANGE = RANGE + 2;
 
+	vector<LL> A(N);
+	vector<LL> B(N);
+	vector<LL> C(N);
+	vector<LL> D(N);
+	vector<vector<LL>> paper_sum(SUM_RANGE, vector<LL>(SUM_RANGE, 0));
+	LL ans = 0;
 
-    int offset = 1;
+	for (int i = 0; i < N; i++) {
+		cin >> A[i] >> B[i] >> C[i] >> D[i];
 
-    for (int i = 0; i < N; i++) {
-        cin >> A[i] >> B[i] >> C[i] >> D[i];
+		//(A,B),(C,D)が紙の隅のマスをさしている場合
+		/*
+		paper_sum[A[i]][B[i]] += 1;
+		paper_sum[C[i] + 1][D[i] + 1] += 1;
+		paper_sum[A[i]][D[i] + 1] -= 1;
+		paper_sum[C[i] + 1][B[i]] -= 1;
+		*/
 
-        masu[A[i] + offset][B[i] + offset] += 1;
-        masu[C[i] + offset][D[i] + offset] += 1;
-        masu[A[i] + offset][D[i] + offset] -= 1;
-        masu[C[i] + offset][B[i] + offset] -= 1;
-    }
+		//(A,B),(C,D)が紙の角の座標を示している場合
+		paper_sum[A[i]][B[i]] += 1;
+		paper_sum[C[i]][D[i]] += 1;
+		paper_sum[A[i]][D[i]] -= 1;
+		paper_sum[C[i]][B[i]] -= 1;
+	}
 
-    for (int raw = 1; raw <= c_range; raw++) {
-        for (int col = 1; col <= c_range; col++) {
-            r_sum[raw][col] = masu[raw][col] + r_sum[raw][col - 1];
-        }
-    }
+	//(A,B),(C,D)が紙の隅のマスをさしている場合
+	/*
+	for (int r = 0; r < SUM_RANGE; r++) {
+		for (int c = 1; c < SUM_RANGE; c++) {
+			paper_sum[r][c] += paper_sum[r][c - 1];
+		}
+	}
 
-    int answer = 0;
+	for (int c = 0; c < SUM_RANGE; c++) {
+		for (int r = 1; r < SUM_RANGE; r++) {
+			paper_sum[r][c] += paper_sum[r - 1][c];
+		}
+	}
+	*/
 
-    for (int col = 1; col <= c_range; col++) {
-        for (int raw = 1; raw <= c_range; raw++) {
-            all_sum[raw][col] = r_sum[raw][col] + all_sum[raw - 1][col];
-            if (all_sum[raw][col] >= 1)
-                answer++;
-        }
-    }
+	//(A,B),(C,D)が紙の角の座標を示している場合
+	for (int r = 0; r <= RANGE; r++) {
+		for (int c = 1; c <= RANGE; c++) {
+			paper_sum[r][c] += paper_sum[r][c - 1];
+		}
+	}
 
-    cout << answer << endl;
+	for (int c = 0; c <= RANGE; c++) {
+		for (int r = 1; r <= RANGE; r++) {
+			paper_sum[r][c] += paper_sum[r - 1][c];
+		}
+	}
 
-    return 0;
+	//紙が1枚以上置かれている箇所の面積
+	for (int r = 0; r <= RANGE; r++) {
+		for (int c = 0; c <= RANGE; c++) {
+			if (paper_sum[r][c] >= 1) {
+				ans++;
+			}
+		}
+	}
+
+	cout << ans << endl;
+
+	return 0;
 }
 
