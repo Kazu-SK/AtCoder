@@ -21,8 +21,8 @@ int main()
 	vector<LL> p(Q);
 	vector<LL> q(Q);
 	vector<LL> ans(Q, 0);
-	vector<vector<LL>> train_info(N + 2, vector<LL>(N + 2, 0));
-	vector<vector<LL>> train_sum(N + 2, vector<LL>(N + 2, 0));
+	vector<vector<LL>> train_info(N + 1, vector<LL>(N + 1, 0));
+	vector<vector<LL>> train_sum(N + 1, vector<LL>(N + 1, 0));
 
 	for (int i = 0; i < M; i++) {
 		cin >> L[i] >> R[i];
