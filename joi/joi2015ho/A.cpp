@@ -22,6 +22,7 @@ int main()
 	vector<int> B(N);
 	vector<int> C(N);
 	vector<int> R(N,0);
+	vector<int> cheap(N,0);
 
 	for (int i = 1; i <= M; i++)
 		cin >> P[i];
@@ -43,9 +44,19 @@ int main()
 		}
 	}
 
-	for (int i = 1; i <= N - 1; i++) {
+	/*
+	for (int i = 1; i < N; i++) {
 		cout << R[i] << " ";
 	}
+	*/
+
+	LL ans = 0;
+	for (int i = 1; i < N; i++) {
+		cheap[i] = min(A[i] * R[i], B[i] * R[i] + C[i]);
+		ans += (LL)cheap[i];
+	}
+
+	cout << ans << endl;
 
 	return 0;
 }
