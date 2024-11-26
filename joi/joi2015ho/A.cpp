@@ -21,39 +21,38 @@ int main()
 	vector<int> A(N);
 	vector<int> B(N);
 	vector<int> C(N);
-	vector<int> R(N,0);
-	vector<int> cheap(N,0);
+	vector<LL> R(N + 2,0);
+	vector<LL> cheap(N,0);
 
 	for (int i = 1; i <= M; i++)
 		cin >> P[i];
 
-
 	for (int i = 1; i < N; i++)
 		cin >> A[i] >> B[i] >> C[i];
 
+
+	//累積和による解法
 	for (int i = 1; i < M; i++) {
-		if (P[i] < P[i + 1]) {
-			for (int p = P[i]; p < P[i + 1]; p++) {
-				R[p]++;
-			}
+
+		int start = P[i];
+		int goal = P[i + 1];
+
+		if (start > goal) { //goal地点のほうが値が小さい場合は、goal→startの都市に移動すると仮定する。
+			swap(start, goal);
 		}
-		else {
-			for (int p = P[i]; p > P[i + 1]; p--) {
-				R[p - 1]++;
-			}
-		}
+
+		R[start]++;
+		R[goal]--;
 	}
 
-	/*
-	for (int i = 1; i < N; i++) {
-		cout << R[i] << " ";
+	for (int i = 2; i < N; i++) {
+		R[i] += R[i - 1];
 	}
-	*/
 
 	LL ans = 0;
 	for (int i = 1; i < N; i++) {
 		cheap[i] = min(A[i] * R[i], B[i] * R[i] + C[i]);
-		ans += (LL)cheap[i];
+		ans += cheap[i];
 	}
 
 	cout << ans << endl;
