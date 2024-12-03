@@ -12,22 +12,22 @@ using LL = long long;
 
 int main()
 {
-    int N = 0;
+	int N = 0;
 
 
-    cin >> N;
+	cin >> N;
 
-    vector<int> a(N);
-    int sum = 0;
+	vector<int> a(N);
+	int sum = 0;
 
 
-    for (int i = 0; i < N; i++) {
-        cin >> a[i];
-        sum += a[i];
-    }
+	for (int i = 0; i < N; i++) {
+		cin >> a[i];
+		sum += a[i];
+	}
 
-    cout << sum % 100 << endl;
+	cout << sum % 100 << endl;
 
-    return 0;
+	return 0;
 }
 
