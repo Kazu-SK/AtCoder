@@ -38,17 +38,13 @@ int main()
 		ans = 1;
 	}
 	else {
-		if (even_H) {
+		if (even_H)
 			ans = H * W / 2;
-		}
 		else {
-			if (even_W) {
+			if (even_W)
 				ans = ((H / 2 + 1) + (H / 2)) * (W / 2);
-			}
-			else {
-
+			else 
 				ans = (H / 2 + 1) * (W / 2 + 1) + (H / 2) * (W / 2);
-			}
 		}
 	}
 
