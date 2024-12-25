@@ -17,11 +17,11 @@ int main()
 
 	cin >> N;
 
+
 	vector<pair<int, int>> Movie(N);
 
-	for (int i = 0; i < N; i++) {
+	for (int i = 0; i < N; i++)
 		cin >> Movie[i].first >> Movie[i].second;
-	}
 
 	sort(Movie.begin(), Movie.end(), [](const auto& lhs, const auto& rhs) { return lhs.second < rhs.second; });
 
@@ -31,7 +31,6 @@ int main()
 	time = Movie[0].second;
 
 	for (int i = 1; i < N; i++) {
-
 		if (Movie[i].first >= time) {
 			time = Movie[i].second;
 			ans++;
