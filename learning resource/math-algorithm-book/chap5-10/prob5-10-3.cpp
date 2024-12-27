@@ -31,6 +31,8 @@ int main()
 	for (int i = 0; i < 3; i++) {
 
 		sum_ABC[i] = SumArithmeticProgression1d(input_ABC[i]);
+
+		//割り算が終わった後に余りを求める。
 		sum_ABC[i] %= DIV;
 
 		ans *= sum_ABC[i];
