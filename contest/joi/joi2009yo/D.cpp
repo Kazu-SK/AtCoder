@@ -1,4 +1,12 @@
-﻿#include <iostream>
+﻿
+/***
+
+現在いる薄氷のエリアから移動可能のエリアをDIFFとした場合、
+最大でいくつの薄氷があるエリアに移動できるかを求める。
+
+***/
+
+#include <iostream>
 #include <vector>
 #include <string>
 #include <algorithm>
@@ -10,14 +18,27 @@
 using namespace std;
 using LL = long long;
 
-int ice_Map[91][91];
-int num_Map[91][91];
-bool visited[8101];
+const int EREA_RANGE = 90; //h, wの最大値
+int ice_Map[EREA_RANGE + 1][EREA_RANGE + 1]; //0:氷じゃない 1:氷
+int num_Map[EREA_RANGE + 1][EREA_RANGE + 1]; //エリア[h][w]を数値で定義する。
 
-const int DIFF[4][2] = { {1, 0}, {-1 ,0}, {0, 1}, {0, -1} };
+/*
+[1][1]	[1][2]	[1][3]	[1][4]
+[2][1]	[2][2]	[2][3]	[2][4]
+[3][1]	[3][2]	[3][3]	[3][4]
+
+1	2	3	4
+5	6	7	8
+9	10	11	12
+*/
+
+bool visited[EREA_RANGE * EREA_RANGE + 1]; //訪問済みのエリア
+const int MOVE_NUM = 4;
+const int DIFF[MOVE_NUM][2] = { {1, 0}, {-1 ,0}, {0, 1}, {0, -1} }; //現在のエリアから移動可能のエリアの方向
+
 int H, W;
 int ans;
-vector<vector<int>> Graph(8101);
+vector<vector<int>> Graph(EREA_RANGE * EREA_RANGE + 1); //接続されている各頂点
 
 void dfs(int num, int b = 1) {
 
