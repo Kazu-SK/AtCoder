@@ -75,7 +75,7 @@ int main()
 		for (int w = 1; w <= W; w++) {
 
 			if (ice_Map[h][w] == 1) {
-				for (int i = 0; i < 4; i++) {
+				for (int i = 0; i < MOVE_NUM; i++) {
 					int search_h = h + DIFF[i][0];
 					int search_w = w + DIFF[i][1];
 
