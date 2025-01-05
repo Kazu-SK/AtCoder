@@ -114,18 +114,13 @@ int main()
 					if (move_c < 1 || move_c > C)continue;
 					if (move_r < 1 || move_r > R)continue;
 
-
 					if (dist_Map[move_r][move_c] != -1)
 						continue;
 
-					if ((maze_Map[move_r][move_c] == '.' || maze_Map[move_r][move_c] == 'G') && ((before_d == 0 || before_d == 1) && (d == 2 || d == 3))) {
-						qR.push(move_r);
-						qC.push(move_c);
-						qD.push(d);
-						dist_Map[move_r][move_c] = dist_Map[pos_r][pos_c] + D;
-					}
+					bool before_d01 = (maze_Map[move_r][move_c] == '.' || maze_Map[move_r][move_c] == 'G') && ((before_d == 0 || before_d == 1) && (d == 2 || d == 3));
+					bool before_d23 = (maze_Map[move_r][move_c] == '.' || maze_Map[move_r][move_c] == 'G') && ((before_d == 2 || before_d == 3) && (d == 0 || d == 1));
 
-					if ((maze_Map[move_r][move_c] == '.' || maze_Map[move_r][move_c] == 'G') && ((before_d == 2 || before_d == 3) && (d == 0 || d == 1))) {
+					if (before_d01 || before_d23) {
 						qR.push(move_r);
 						qC.push(move_c);
 						qD.push(d);
