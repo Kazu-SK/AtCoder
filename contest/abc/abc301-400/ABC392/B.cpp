@@ -12,36 +12,36 @@ using LL = long long;
 
 int main()
 {
-    int N, M;
+	int N, M;
 
 
-    cin >> N >> M;
+	cin >> N >> M;
 
-    vector<int> A(M + 1);
-    vector<int> X;
+	vector<int> A(M + 1);
+	vector<int> X;
 
-    for (int i = 1; i <= M; i++)
-        cin >> A[i];
+	for (int i = 1; i <= M; i++)
+		cin >> A[i];
 
-    sort(A.begin(), A.end());
+	sort(A.begin(), A.end());
 
-    int A_itr = 1;
-    for (int n = 1; n <= N; n++) {
-        if (A[A_itr] == n) {
+	int A_itr = 1;
+	for (int n = 1; n <= N; n++) {
+		if (A[A_itr] == n) {
 
-            if(A_itr < M)
+			if(A_itr < M)
 				A_itr++;
-        }
-        else {
-            X.push_back(n);
-        }
-    }
+		}
+		else {
+			X.push_back(n);
+		}
+	}
 
-    cout << X.size() << endl;
+	cout << X.size() << endl;
 
-    for (int i = 0; i < X.size(); i++)
-        cout << X[i] << " ";
+	for (int i = 0; i < X.size(); i++)
+		cout << X[i] << " ";
 
-    return 0;
+	return 0;
 }
 
