@@ -8,36 +8,39 @@
 #include <set>
 
 using namespace std;
-using LL = long long;
+using llong = long long;
 
 int main()
 {
 	int N = 0, M = 0;
-	LL left = 0;
-	LL right = 0;
+	llong left = 0;
+	llong right = 0;
+
 
 	cin >> N >> M;
 
 
-	vector<LL> L(N);
+	vector<llong> L(N);
 
 	for (int i = 0; i < N; i++)
 		cin >> L[i];
 
 	for (int i = 0; i < N; i++) {
-		L[i] += 1;
-		left = max(left, L[i]) - 1;
+		L[i] += 1; //L[i]の間に空白が入ることを想定
+		left = max(left, L[i]);
 		right += L[i];
 	}
 
-	right -= 1;
+	left--; //L[i]の最大値が1行で収まった場合、最後が空白にならないので、空白の1文字分を減算
+	right--; //L[i](0 <= i < N)が1行で収まった場合、最後が空白にならないので、空白の1文字分を減算
+
+	left--; //https://qiita.com/hamko/items/794a92c456164dcc04ad　に従い、二分探索処理前にleftを1減算
 
 	while (right - left > 1) {
-		LL middle = left + (right - left) / 2;
-		//LL middle = (right + left) / 2;
+		llong middle = (right + left) / 2;
 
-		LL row = 1;
-		LL col = 0;
+		llong row = 1;
+		llong col = 0;
 
 		for (int i = 0; i < N; i++) {
 
@@ -49,7 +52,7 @@ int main()
 			}
 		}
 
-		if (row <= M) {
+		if (row <= M) { //条件に収まっている場合はright=middle
 			right = middle;
 		}
 		else {
@@ -57,7 +60,7 @@ int main()
 		}
 	}
 
-	cout << right << endl;
+	cout << right << endl; //https://qiita.com/hamko/items/794a92c456164dcc04ad によれば、rightが答えになるらしい。
 
 
 	return 0;
