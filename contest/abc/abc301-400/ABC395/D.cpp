@@ -12,93 +12,48 @@ using llong = long long;
 
 int main()
 {
-	int N = 0;
-	int Q = 0;
+	int N = 0, Q = 0;
 
-
-	map<int, int> bird;
-	map<int, vector<int>> house;
-	map<int, vector<int>> temp;
-
-
+	//vector<int> house(N + 1);
 	cin >> N >> Q;
 
+	vector<int> piegon_to_box(N + 1); // 鳩が入っている袋の番号
+	vector<int> house_to_box(N + 1); // 巣の中に入っている袋の番号
+	vector<int> box_to_house(N + 1); // 袋のある巣の番号
+
 	for (int i = 1; i <= N; i++) {
-		bird[i] = i;
-		house[i].push_back(i);
+		piegon_to_box[i] = i;
+		house_to_box[i] = i;
+		box_to_house[i] = i;
 	}
 
-	for (int q = 1; q <= Q; q++) {
+	for (int q = 0; q < Q; q++) {
 
-		int op = 0;
-		int a = 0;
-		int b = 0;
+		int op;
+		int a, b;
+
 
 		cin >> op;
 
-		if (op == 1) { //鳩aが巣bに移動
+		if (op == 1) {
 			cin >> a >> b;
-
-			for (int i = 0; i < house[bird[a]].size(); i++) {
-				if (house[bird[a]][i] == a) {
-					house[bird[a]].erase(house[bird[a]].begin() + i);
-					break;
-				}
-			}
-			/*
-			for (int i = 1; i <= N; i++) {
-				//cout << "house[" << i << "]" << '\t';
-				for (int j = 0; j < house[i].size(); j++) {
-					cout << house[i][j] << " ";
-				}
-				//cout << endl;
-			}
-			*/
-
-			bird[a] = b;
-			house[b].push_back(a);
+			piegon_to_box[a] = house_to_box[b];
 		}
 		else if (op == 2) {
 			cin >> a >> b;
 
-			for (int i = 0; i < house[a].size(); i++) {
-				temp[b].push_back(house[a][i]); //house[a][i] 巣aにいる鳩の番号
-				bird[house[a][i]] = b; //鳩の居場所更新
-			}
+			swap(house_to_box[a], house_to_box[b]); //巣の中に入っている袋を交換
 
-			house[a].clear();
-
-			for (int i = 0; i < house[b].size(); i++) {
-				house[a].push_back(house[b][i]); //house[b][i] 巣bにいる鳩の番号
-				bird[house[b][i]] = a; //鳩の居場所更新
-			}
-
-			house[b].clear();
-
-			for (int i = 0; i < temp[b].size(); i++) {
-				house[b].push_back(temp[b][i]);
-			}
-
-			temp[b].clear();
-
-		}
-		else if (op == 3) { //鳩aの巣の場所出力
-			cin >> a;
-			cout << bird[a] << endl;
+			//袋の交換に伴い、袋のある巣の番号を更新する。
+			box_to_house[house_to_box[a]] = a;
+			box_to_house[house_to_box[b]] = b;
 		}
 		else {
+			cin >> a;
+			cout << box_to_house[piegon_to_box[a]] << endl;
 		}
-
-		/*
-		for (int i = 1; i <= N; i++) {
-			cout << "house[" << i << "]" << '\t';
-			for (int j = 0; j < house[i].size(); j++) {
-				cout << house[i][j] << " ";
-			}
-			cout << endl;
-		}
-		*/
 	}
+
 
 	return 0;
 }
